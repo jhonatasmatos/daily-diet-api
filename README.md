@@ -1,31 +1,35 @@
-# Daily Diet API
+<h1>Daily Diet API</h1>
 
-Challenge proposed by rocketseat for ignite course.
-n API to control a daily diet.
+<p>Challenge proposed by rocketseat for ignite course.</p>
+<p>An API to control a daily diet.</p>
 
-## Requirements
+</h2>Requirements</h2>
 
-✅ Should be possible to create an user.
+<p>✅ Should be possible to create an user.</p>
 
-[ ] Should be possible to identify the user among the requests.
+<p>[ ] Should be possible to identify the user among the requests.</p>
 
-✅ Should be possible to record a meal made, with the following information:
-    *Meals must be related to a user.*
-    - Name
-    - Description
-    - Date and Hour
-    - On or off the diet
+<p>✅ Should be possible to record a meal made, with the following information:</p>
+    <i>Meals must be related to a user.</i>
+    <ul>
+        <li>Name</li>
+        <li>Description</li>
+        <li>Date and Hour</li>
+        <li>On or off the diet</li>
+    </ul>
 
-[ ] Should be possible to edit a meal, being able to change all the above data.
+<p>[ ] Should be possible to edit a meal, being able to change all the above data.</p>
 
-[ ] Should be possible to list all meals of a user.
+<p>[ ] Should be possible to list all meals of a user.</p>
 
-✅ Should be possible to visualize a single meal.
+<p>✅ Should be possible to visualize a single meal.</p>
 
-[ ] Should be possible to retrieve a user's metrics.
-    - Total number of registered meals
-    - Total amount of meals within the diet
-    - Total number of meals outside the diet
-    - Better sequence of meals within the diet
+<p>[ ] Should be possible to retrieve a user's metrics.</p>
+    <ul>
+        <li>Total number of registered meals</li>
+        <li>Total amount of meals within the diet</li>
+        <li>Total number of meals outside the diet</li>
+        <li>Better sequence of meals within the diet</li>
+    </ul>
 
-[ ] User can only view, edit and delete meals which he created.
+<p>[ ] User can only view, edit and delete meals which he created.</p>

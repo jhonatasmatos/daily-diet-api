@@ -1,0 +1,42 @@
+{
+  "name": "daily-diet-api",
+  "version": "1.0.0",
+  "description": "Challenge proposed by rocketseat for ignite course. An API to control a daily diet.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "knex": "node --no-warnings --loader tsx ./node_modules/knex/bin/cli.js --knexfile ./knexfile.ts",
+    "lint": "eslint src --ext .ts --fix",
+    "build": "tsup src --out-dir build",
+    "test": "vitest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhonatasmatos/daily-diet-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jhonatasmatos/daily-diet-api/issues"
+  },
+  "homepage": "https://github.com/jhonatasmatos/daily-diet-api#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "fastify": "^4.17.0",
+    "knex": "^2.4.2",
+    "pg": "^8.11.0",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@rocketseat/eslint-config": "^1.2.0",
+    "@types/node": "^20.2.5",
+    "@types/supertest": "^2.0.12",
+    "eslint": "^8.40.0",
+    "sqlite3": "^5.1.6",
+    "supertest": "^6.3.3",
+    "tsup": "^6.7.0",
+    "tsx": "^3.12.7",
+    "vitest": "^0.32.0"
+  }
+}

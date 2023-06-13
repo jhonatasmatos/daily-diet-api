@@ -1,11 +1,11 @@
 # Daily Diet API
 
 Challenge proposed by rocketseat for ignite course.
-An API to control a daily diet.
+n API to control a daily diet.
 
-Requirements
+## Requirements
 
-[ ] Should be possible to create an user.
+✅ Should be possible to create an user.
 
 [ ] Should be possible to identify the user among the requests.
 
@@ -28,4 +28,4 @@ Requirements
     - Total number of meals outside the diet
     - Better sequence of meals within the diet
 
-[ ] User can only view, edit and delete meals which he created
+[ ] User can only view, edit and delete meals which he created.

@@ -9,7 +9,7 @@ n API to control a daily diet.
 
 [ ] Should be possible to identify the user among the requests.
 
-[ ] Should be possible to record a meal made, with the following information:
+✅ Should be possible to record a meal made, with the following information:
     *Meals must be related to a user.*
     - Name
     - Description
@@ -20,7 +20,7 @@ n API to control a daily diet.
 
 [ ] Should be possible to list all meals of a user.
 
-[ ] Should be possible to visualize a single meal.
+✅ Should be possible to visualize a single meal.
 
 [ ] Should be possible to retrieve a user's metrics.
     - Total number of registered meals

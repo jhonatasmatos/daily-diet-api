@@ -3,7 +3,7 @@
 <p>Challenge proposed by rocketseat for ignite course.</p>
 <p>An API to control a daily diet.</p>
 
-</h2>Requirements</h2>
+<h2>Requirements</h2>
 
 <p>✅ Should be possible to create an user.</p>
 

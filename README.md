@@ -7,7 +7,7 @@
 
 <p>✅ Should be possible to create an user.</p>
 
-<p>[ ] Should be possible to identify the user among the requests.</p>
+<p>✅ Should be possible to identify the user among the requests.</p>
 
 <p>✅ Should be possible to record a meal made, with the following information:</p>
     <i>Meals must be related to a user.</i>
@@ -20,7 +20,9 @@
 
 <p>[ ] Should be possible to edit a meal, being able to change all the above data.</p>
 
-<p>[ ] Should be possible to list all meals of a user.</p>
+<p>✅ Should be possible delete a meal.</p>
+
+<p>✅ Should be possible to list all meals of a user.</p>
 
 <p>✅ Should be possible to visualize a single meal.</p>
 

@@ -18,7 +18,7 @@
         <li>On or off the diet</li>
     </ul>
 
-<p>[ ] Should be possible to edit a meal, being able to change all the above data.</p>
+<p>✅ Should be possible to edit a meal, being able to change all the above data.</p>
 
 <p>✅ Should be possible delete a meal.</p>
 

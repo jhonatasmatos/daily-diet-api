@@ -62,27 +62,35 @@ export async function mealRoutes(app: FastifyInstance) {
     return { meals }
   })
 
-  app.delete('/:id', async (request, reply) => {
-    const getMealParamsSchema = z.object({
-      id: z.string().uuid(),
-    })
+  app.delete(
+    '/:id',
+    { preHandler: [checkSessionIdExists] },
+    async (request, reply) => {
+      const getMealParamsSchema = z.object({
+        id: z.string().uuid(),
+      })
 
-    const { id } = getMealParamsSchema.parse(request.params)
+      const { id } = getMealParamsSchema.parse(request.params)
 
-    await knex('meals').where({ id }).delete()
+      await knex('meals').where({ id }).delete()
 
-    return reply.status(202).send()
-  })
+      return reply.status(202).send()
+    },
+  )
 
-  app.get('/user/:id', async (request) => {
-    const getUserParamsSchema = z.object({
-      id: z.string().uuid(),
-    })
+  app.get(
+    '/user/:id',
+    { preHandler: [checkSessionIdExists] },
+    async (request) => {
+      const getUserParamsSchema = z.object({
+        id: z.string().uuid(),
+      })
 
-    const { id } = getUserParamsSchema.parse(request.params)
+      const { id } = getUserParamsSchema.parse(request.params)
 
-    const meal = await knex('meals').where('user_id', id).select()
+      const meal = await knex('meals').where('user_id', id).select()
 
-    return { meal }
-  })
+      return { meal }
+    },
+  )
 }

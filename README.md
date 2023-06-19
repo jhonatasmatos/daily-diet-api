@@ -26,7 +26,7 @@
 
 <p>✅ Should be possible to visualize a single meal.</p>
 
-<p>[ ] Should be possible to retrieve a user's metrics.</p>
+<p>✅ Should be possible to retrieve a user's metrics.</p>
     <ul>
         <li>Total number of registered meals</li>
         <li>Total amount of meals within the diet</li>
@@ -34,4 +34,4 @@
         <li>Better sequence of meals within the diet</li>
     </ul>
 
-<p>[ ] User can only view, edit and delete meals which he created.</p>
+<p>✅ User can only view, edit and delete meals which he created.</p>

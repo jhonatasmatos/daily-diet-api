@@ -34,4 +34,4 @@
         <li>Better sequence of meals within the diet</li>
     </ul>
 
-<p>✅ User can only view, edit and delete meals which he created.</p>
+<p>[ ] User can only view, edit and delete meals which he created.</p>

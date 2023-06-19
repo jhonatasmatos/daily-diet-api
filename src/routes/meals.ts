@@ -140,4 +140,54 @@ export async function mealRoutes(app: FastifyInstance) {
       return reply.status(202).send()
     },
   )
+
+  app.get(
+    '/summary',
+    { preHandler: [checkSessionIdExists] },
+    async (request) => {
+      const { sessionId } = request.cookies
+
+      const [user] = await knex('users')
+        .where('session_id', sessionId)
+        .select('id')
+
+      const userId = user.id
+
+      const [count] = await knex('meals')
+        .count('id', {
+          as: 'Total de refeições registradas',
+        })
+        .where('user_id', userId)
+
+      const refDieta = await knex('meals')
+        .count('id', { as: 'Total de refeições dentro da dieta' })
+        .where({ on_diet: true, user_id: userId })
+
+      const refForaDieta = await knex('meals')
+        .count('id', { as: 'Total de refeições fora da dieta' })
+        .where({ on_diet: false, user_id: userId })
+
+      const summary = {
+        'Total de refeições registradas': parseInt(
+          JSON.parse(JSON.stringify(count))['Total de refeições registradas'],
+        ),
+
+        'Total de refeições dentro da dieta': parseInt(
+          JSON.parse(JSON.stringify(refDieta))[0][
+            'Total de refeições dentro da dieta'
+          ],
+        ),
+
+        'Total de refeições fora da dieta': parseInt(
+          JSON.parse(JSON.stringify(refForaDieta))[0][
+            'Total de refeições fora da dieta'
+          ],
+        ),
+      }
+
+      return {
+        summary,
+      }
+    },
+  )
 }

@@ -18,12 +18,14 @@ export async function mealRoutes(app: FastifyInstance) {
       const createMealBodySchema = z.object({
         name: z.string(),
         description: z.string(),
-        onDiet: z.boolean(),
+        on_diet: z.boolean(),
       })
 
-      const { name, description, onDiet } = createMealBodySchema.parse(
-        request.body,
-      )
+      const {
+        name,
+        description,
+        on_diet: onDiet,
+      } = createMealBodySchema.parse(request.body)
 
       const result = await knex('meals')
         .insert({
@@ -44,22 +46,28 @@ export async function mealRoutes(app: FastifyInstance) {
     },
   )
 
-  app.get('/', async () => {
+  app.get('/', async (request, reply) => {
     const meals = await knex('meals').select()
 
-    return { meals }
+    return reply.status(200).send({
+      status: 'success',
+      data: meals,
+    })
   })
 
-  app.get('/:id', async (request) => {
+  app.get('/:id', async (request, reply) => {
     const getMealParamsSchema = z.object({
       id: z.string().uuid(),
     })
 
     const { id } = getMealParamsSchema.parse(request.params)
 
-    const meals = await knex('meals').where(id).select()
+    const meal = await knex('meals').where('id', id).first()
 
-    return { meals }
+    return reply.status(200).send({
+      status: 'success',
+      data: meal,
+    })
   })
 
   app.delete(
@@ -72,7 +80,12 @@ export async function mealRoutes(app: FastifyInstance) {
 
       const { id } = getMealParamsSchema.parse(request.params)
 
-      await knex('meals').where(id).delete()
+      const mealExists = await knex('meals').where('id', id).first()
+
+      if (!mealExists) {
+        return reply.status(404).send()
+      }
+      await knex('meals').where('id', id).delete()
 
       return reply.status(202).send()
     },
@@ -81,16 +94,19 @@ export async function mealRoutes(app: FastifyInstance) {
   app.get(
     '/user/:id',
     { preHandler: [checkSessionIdExists] },
-    async (request) => {
+    async (request, reply) => {
       const getUserParamsSchema = z.object({
         id: z.string().uuid(),
       })
 
       const { id } = getUserParamsSchema.parse(request.params)
 
-      const meal = await knex('meals').where('user_id', id).select()
+      const meals = await knex('meals').where('user_id', id).select()
 
-      return { meal }
+      return reply.status(200).send({
+        status: 'success',
+        data: meals,
+      })
     },
   )
 

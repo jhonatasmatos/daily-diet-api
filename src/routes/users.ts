@@ -22,6 +22,15 @@ export async function userRoutes(app: FastifyInstance) {
       })
     }
 
+    const userExists = await knex('users').where('username', username).first()
+
+    if (userExists) {
+      return reply.status(400).send({
+        status: 'error',
+        message: 'Usuário já cadastrado',
+      })
+    }
+
     const result = await knex('users')
       .insert({
         id: randomUUID(),
@@ -38,9 +47,12 @@ export async function userRoutes(app: FastifyInstance) {
     })
   })
 
-  app.get('/', async () => {
+  app.get('/', async (request, reply) => {
     const users = await knex('users').select()
 
-    return { users }
+    return reply.status(200).send({
+      status: 'success',
+      data: users,
+    })
   })
 }

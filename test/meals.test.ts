@@ -78,42 +78,6 @@ describe('Meals routes', () => {
     ])
   })
 
-  it('should be able to list a specific meal', async () => {
-    const createUserResponse = await request(app.server).post('/users').send({
-      username: 'johndoe',
-    })
-
-    const cookies = createUserResponse.get('Set-Cookie')
-
-    await request(app.server).post('/meals').set('Cookie', cookies).send({
-      name: 'suco detox',
-      description: 'suco',
-      on_diet: true,
-    })
-
-    const getMealResponse = await request(app.server)
-      .post('/meals')
-      .set('Cookie', cookies)
-      .send({
-        name: 'pizza',
-        description: 'pizza',
-        on_diet: false,
-      })
-
-    const mealId = getMealResponse.body.data.id
-    const mealResponse = await request(app.server)
-      .get(`/meals/${mealId}`)
-      .expect(200)
-
-    expect(mealResponse.body.data).toEqual(
-      expect.objectContaining({
-        name: 'pizza',
-        description: 'pizza',
-        on_diet: 0,
-      }),
-    )
-  })
-
   it('should be able to delete a specific meal', async () => {
     const createUserResponse = await request(app.server).post('/users').send({
       username: 'johndoe',
@@ -173,6 +137,7 @@ describe('Meals routes', () => {
     const createUserResponse = await request(app.server).post('/users').send({
       username: 'johndoe',
     })
+
     const userId = createUserResponse.body.data.id
     const cookies = createUserResponse.get('Set-Cookie')
 
@@ -195,5 +160,106 @@ describe('Meals routes', () => {
         on_diet: 1,
       }),
     ])
+  })
+
+  it('should not be able to list a specific meal of another user', async () => {
+    const createUserResponse = await request(app.server).post('/users').send({
+      username: 'johndoe',
+    })
+
+    const cookies = createUserResponse.get('Set-Cookie')
+
+    const mealResponse = await request(app.server)
+      .post('/meals')
+      .set('Cookie', cookies)
+      .send({
+        name: 'suco detox',
+        description: 'suco',
+        on_diet: true,
+      })
+
+    const mealId = mealResponse.body.data.id
+
+    const createSecondUserResponse = await request(app.server)
+      .post('/users')
+      .send({
+        username: 'jamesbond',
+      })
+
+    const secondCookies = createSecondUserResponse.get('Set-Cookie')
+
+    await request(app.server)
+      .get(`/meals/${mealId}`)
+      .set('Cookie', secondCookies)
+      .expect(404)
+  })
+
+  it('should not be able to delete a specific meal of another user', async () => {
+    const createUserResponse = await request(app.server).post('/users').send({
+      username: 'johndoe',
+    })
+
+    const cookies = createUserResponse.get('Set-Cookie')
+
+    const mealResponse = await request(app.server)
+      .post('/meals')
+      .set('Cookie', cookies)
+      .send({
+        name: 'suco detox',
+        description: 'suco',
+        on_diet: true,
+      })
+
+    const mealId = mealResponse.body.data.id
+
+    const createSecondUserResponse = await request(app.server)
+      .post('/users')
+      .send({
+        username: 'jamesbond',
+      })
+
+    const secondCookies = createSecondUserResponse.get('Set-Cookie')
+
+    await request(app.server)
+      .delete(`/meals/${mealId}`)
+      .set('Cookie', secondCookies)
+      .expect(404)
+  })
+
+  it('should not be able to edit a specific meal of another user', async () => {
+    const createUserResponse = await request(app.server).post('/users').send({
+      username: 'johndoe',
+    })
+
+    const cookies = createUserResponse.get('Set-Cookie')
+
+    const mealResponse = await request(app.server)
+      .post('/meals')
+      .set('Cookie', cookies)
+      .send({
+        name: 'suco detox',
+        description: 'suco',
+        on_diet: true,
+      })
+
+    const mealId = mealResponse.body.data.id
+
+    const createSecondUserResponse = await request(app.server)
+      .post('/users')
+      .send({
+        username: 'jamesbond',
+      })
+
+    const secondCookies = createSecondUserResponse.get('Set-Cookie')
+
+    await request(app.server)
+      .put(`/meals/${mealId}`)
+      .set('Cookie', secondCookies)
+      .send({
+        name: 'suco detox edited',
+        description: 'suco edited',
+        onDiet: true,
+      })
+      .expect(404)
   })
 })

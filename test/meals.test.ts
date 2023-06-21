@@ -289,9 +289,9 @@ describe('Meals routes', () => {
 
     expect(summaryMeals.body.data).toEqual(
       expect.objectContaining({
-        'Total de refeições registradas': 2,
-        'Total de refeições dentro da dieta': 1,
-        'Total de refeições fora da dieta': 1,
+        'registered meals': 2,
+        'meals on diet': 1,
+        'meals off diet': 1,
       }),
     )
   })

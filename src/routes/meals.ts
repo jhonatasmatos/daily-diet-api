@@ -202,33 +202,29 @@ export async function mealRoutes(app: FastifyInstance) {
 
       const [count] = await knex('meals')
         .count('id', {
-          as: 'Total de refeições registradas',
+          as: 'registered meals',
         })
         .where('user_id', userId)
 
       const refDieta = await knex('meals')
-        .count('id', { as: 'Total de refeições dentro da dieta' })
+        .count('id', { as: 'meals on diet' })
         .where({ on_diet: true, user_id: userId })
 
       const refForaDieta = await knex('meals')
-        .count('id', { as: 'Total de refeições fora da dieta' })
+        .count('id', { as: 'meals off diet' })
         .where({ on_diet: false, user_id: userId })
 
       const summary = {
-        'Total de refeições registradas': parseInt(
-          JSON.parse(JSON.stringify(count))['Total de refeições registradas'],
+        'registered meals': parseInt(
+          JSON.parse(JSON.stringify(count))['registered meals'],
         ),
 
-        'Total de refeições dentro da dieta': parseInt(
-          JSON.parse(JSON.stringify(refDieta))[0][
-            'Total de refeições dentro da dieta'
-          ],
+        'meals on diet': parseInt(
+          JSON.parse(JSON.stringify(refDieta))[0]['meals on diet'],
         ),
 
-        'Total de refeições fora da dieta': parseInt(
-          JSON.parse(JSON.stringify(refForaDieta))[0][
-            'Total de refeições fora da dieta'
-          ],
+        'meals off diet': parseInt(
+          JSON.parse(JSON.stringify(refForaDieta))[0]['meals off diet'],
         ),
       }
 

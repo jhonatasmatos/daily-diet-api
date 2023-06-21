@@ -62,7 +62,25 @@ export async function mealRoutes(app: FastifyInstance) {
 
     const { id } = getMealParamsSchema.parse(request.params)
 
-    const meal = await knex('meals').where('id', id).first()
+    const { sessionId } = request.cookies
+
+    const [user] = await knex('users')
+      .where('session_id', sessionId)
+      .select('id')
+
+    const userId = user.id
+
+    const mealExists = await knex('meals')
+      .where({ id, user_id: userId })
+      .first()
+
+    if (!mealExists) {
+      return reply.status(404).send({
+        message: 'Meal not found',
+      })
+    }
+
+    const meal = await knex('meals').where({ id, user_id: userId }).first()
 
     return reply.status(200).send({
       status: 'success',
@@ -97,6 +115,7 @@ export async function mealRoutes(app: FastifyInstance) {
           message: 'Meal not found',
         })
       }
+
       await knex('meals').where({ id, user_id: userId }).delete()
 
       return reply.status(202).send()

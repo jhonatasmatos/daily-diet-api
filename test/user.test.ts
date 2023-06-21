@@ -49,7 +49,7 @@ describe('Users routes', () => {
     expect(userResponse.body).toEqual(
       expect.objectContaining({
         status: 'error',
-        message: 'Usuário já cadastrado',
+        message: 'User already registered',
       }),
     )
   })

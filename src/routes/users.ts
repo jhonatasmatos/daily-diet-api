@@ -27,7 +27,7 @@ export async function userRoutes(app: FastifyInstance) {
     if (userExists) {
       return reply.status(400).send({
         status: 'error',
-        message: 'Usuário já cadastrado',
+        message: 'User already registered',
       })
     }
 

@@ -262,4 +262,37 @@ describe('Meals routes', () => {
       })
       .expect(404)
   })
+
+  it('should be able to do summary of meals', async () => {
+    const createUserResponse = await request(app.server).post('/users').send({
+      username: 'johndoe',
+    })
+
+    const cookies = createUserResponse.get('Set-Cookie')
+
+    await request(app.server).post('/meals').set('Cookie', cookies).send({
+      name: 'suco detox',
+      description: 'suco',
+      on_diet: true,
+    })
+
+    await request(app.server).post('/meals').set('Cookie', cookies).send({
+      name: 'pizza',
+      description: 'pizza',
+      on_diet: false,
+    })
+
+    const summaryMeals = await request(app.server)
+      .get('/meals/summary')
+      .set('Cookie', cookies)
+      .expect(200)
+
+    expect(summaryMeals.body.data).toEqual(
+      expect.objectContaining({
+        'Total de refeições registradas': 2,
+        'Total de refeições dentro da dieta': 1,
+        'Total de refeições fora da dieta': 1,
+      }),
+    )
+  })
 })
